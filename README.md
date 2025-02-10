@@ -25,7 +25,8 @@ HTML_TEMPLATE = '''
       --text-color: #333;
       --overlay-color: rgba(0,0,0,0.5);
     }
-    /* Estilos base personalizados */
+    /* Estilos base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Roboto', sans-serif;
       background: var(--bg-color);
@@ -37,7 +38,19 @@ HTML_TEMPLATE = '''
       color: #e0e0e0;
     }
     img { max-width: 100%; height: auto; }
-    /* Header y sección Home */
+    
+    /* Animaciones personalizadas */
+    @keyframes backgroundMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animate-fadeIn { animation: fadeIn 1s ease-in; }
+    .animate-slideDown { animation: slideDown 0.8s ease-out; }
+    .animate-bounceIn { animation: bounceIn 1s ease-out; }
+    .animate-zoomIn { animation: zoomIn 1s ease-out; }
+    
+    /* Header y Home */
     header {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
@@ -84,10 +97,6 @@ HTML_TEMPLATE = '''
       margin-left: auto;
       margin-right: auto;
     }
-    /* Ajustes para productos, paneles y formularios se mantienen similares, usando la clase container y grid de Bootstrap */
-    .product-grid { margin-top: 1rem; }
-    .product { transition: transform 0.3s, box-shadow 0.3s; }
-    .product:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     
     /* Dark mode toggle */
     .dark-toggle {
@@ -104,10 +113,21 @@ HTML_TEMPLATE = '''
       transition: transform 0.3s;
     }
     .dark-toggle:hover { transform: scale(1.1); }
+    
+    /* Responsive */
+    @media(max-width: 768px) {
+      header h1 { font-size: 2.5rem; }
+      header p { font-size: 1.2rem; }
+      .cta-button { font-size: 1.1rem; padding: 0.8rem 1.5rem; }
+    }
+    @media(max-width: 480px) {
+      header h1 { font-size: 2rem; }
+      .cta-button { font-size: 1rem; padding: 0.5rem 1rem; }
+    }
   </style>
 </head>
 <body>
-  <!-- Navbar usando Bootstrap -->
+  <!-- Navbar (Bootstrap) -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand animate__animated animate__fadeInDown" onclick="showSection('home')">LA W</a>
@@ -117,30 +137,22 @@ HTML_TEMPLATE = '''
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" id="navInicio" onclick="showSection('home')">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" id="navMarketplace" onclick="showSection('marketplace')">Productos</a></li>
-          <li class="nav-item"><a class="nav-link" id="navCart" onclick="showSection('cartPanel')">Carrito</a></li>
-          <li class="nav-item" id="navBuyerPanelItem" style="display:none;">
-            <a class="nav-link" id="navBuyerPanel" onclick="showSection('buyerPanel')">Panel Comprador</a>
-          </li>
-          <li class="nav-item" id="navSellerPanelItem" style="display:none;">
-            <a class="nav-link" id="navSellerPanel" onclick="showSection('sellerPanel')">Panel Vendedor</a>
-          </li>
-          <li class="nav-item" id="navLoginItem">
-            <a class="nav-link" id="navLogin" onclick="showLoginModal()">Iniciar Sesión</a>
-          </li>
-          <li class="nav-item" id="navRegisterItem">
-            <a class="nav-link" id="navRegister" onclick="showRegisterModal()">Registrarse</a>
-          </li>
+          <li class="nav-item"><a class="nav-link" onclick="showSection('home')">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" onclick="showSection('marketplace')">Productos</a></li>
+          <li class="nav-item"><a class="nav-link" onclick="showSection('cartPanel'); checkAccessCart()">Carrito</a></li>
+          <li class="nav-item"><a class="nav-link" onclick="checkAccess('buyer')">Panel Comprador</a></li>
+          <li class="nav-item"><a class="nav-link" onclick="checkAccess('seller')">Panel Vendedor</a></li>
+          <li class="nav-item"><a class="nav-link" onclick="showLoginModal()">Iniciar Sesión</a></li>
+          <li class="nav-item"><a class="nav-link" onclick="showRegisterChoiceModal()">Registrarse</a></li>
         </ul>
       </div>
     </div>
   </nav>
   
-  <!-- Sección Home (sin opciones de registro ni chat) -->
+  <!-- Sección Home -->
   <section id="home" class="container">
     <h2 class="animate__animated animate__bounceIn animate__delay-1s">¡Bienvenido a LA W!</h2>
-    <p class="extra-info animate__animated animate__fadeInUp animate__delay-2s">Descubre el marketplace más dinámico, seguro y moderno. Encuentra todo lo que necesitas y disfruta de una experiencia única.</p>
+    <p class="extra-info animate__animated animate__fadeInUp animate__delay-2s">Descubre el marketplace más dinámico, seguro y moderno. Explora productos y vive una experiencia única.</p>
     <button class="btn btn-lg btn-warning cta-button animate__animated animate__zoomIn animate__delay-3s" onclick="showSection('marketplace')">Explora Productos</button>
   </section>
   
@@ -150,19 +162,20 @@ HTML_TEMPLATE = '''
     <div class="input-group mb-3">
       <input type="text" id="searchInput" class="form-control" placeholder="Buscar productos..." onkeyup="filterProducts()">
     </div>
-    <div class="row row-cols-1 row-cols-md-3 g-4 product-grid" id="productGrid">
-      <!-- Aquí se cargarán los productos -->
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="productGrid">
+      <!-- Productos se cargarán dinámicamente -->
     </div>
   </section>
   
-  <!-- Paneles de Carrito, Vendedor y Comprador (se muestran según selección) -->
+  <!-- Panel de Carrito -->
   <section id="cartPanel" class="container panel" style="display:none;">
     <h2>Carrito de Compras</h2>
     <ul id="cartItems" class="list-group"></ul>
     <p class="mt-3">Total: <span id="total">$0.00</span></p>
-    <button class="btn btn-primary" onclick="checkoutCart()">Comprar Carrito</button>
+    <button class="btn btn-primary" onclick="checkAccessCart()">Ver Carrito y Comprar</button>
   </section>
   
+  <!-- Panel de Vendedor -->
   <section id="sellerPanel" class="container panel" style="display:none;">
     <h2>Panel Vendedor</h2>
     <p>Aquí puedes agregar y gestionar tus productos.</p>
@@ -188,6 +201,7 @@ HTML_TEMPLATE = '''
     <div id="sellerEarningsDisplay"><p>Ganancias: $0.00</p></div>
   </section>
   
+  <!-- Panel de Comprador -->
   <section id="buyerPanel" class="container panel" style="display:none;">
     <h2>Panel Comprador</h2>
     <p>Bienvenido, disfruta de tus compras y haz seguimiento de tus órdenes.</p>
@@ -195,37 +209,31 @@ HTML_TEMPLATE = '''
     <p class="mt-3 text-muted">Una vez confirmada la compra se desbloqueará el chat con el vendedor.</p>
   </section>
   
-  <!-- Modal de Login (Bootstrap Modal) -->
-  <div id="loginModal" class="modal" tabindex="-1">
+  <!-- Modal de Elección de Registro -->
+  <div id="registerChoiceModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content p-3">
         <div class="modal-header">
-          <h5 class="modal-title">Iniciar Sesión</h5>
-          <button type="button" class="btn-close" onclick="closeLoginModal()"></button>
+          <h5 class="modal-title">Elige tu tipo de registro</h5>
+          <button type="button" class="btn-close" onclick="closeRegisterChoiceModal()"></button>
         </div>
         <div class="modal-body">
-          <form id="loginForm">
-            <div class="mb-3">
-              <label for="loginEmail" class="form-label">Correo Electrónico</label>
-              <input type="email" id="loginEmail" class="form-control" placeholder="ejemplo@dominio.com" required>
-            </div>
-            <div class="mb-3">
-              <label for="loginPassword" class="form-label">Contraseña</label>
-              <input type="password" id="loginPassword" class="form-control" placeholder="Contraseña" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Entrar</button>
-          </form>
+          <p>¿Cómo deseas registrarte? Esta opción te ayudará a acceder al panel adecuado.</p>
+          <div class="d-flex justify-content-around">
+            <button class="btn btn-primary" onclick="selectRegisterType('buyer')">Como Comprador</button>
+            <button class="btn btn-success" onclick="selectRegisterType('seller')">Como Vendedor</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
   
-  <!-- Modal de Registro (similar estructura Bootstrap) -->
+  <!-- Modal de Registro (Bootstrap) -->
   <div id="registerModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content p-3">
         <div class="modal-header">
-          <h5 class="modal-title">Registrarse</h5>
+          <h5 class="modal-title">Registro</h5>
           <button type="button" class="btn-close" onclick="closeRegisterModal()"></button>
         </div>
         <div class="modal-body">
@@ -239,12 +247,9 @@ HTML_TEMPLATE = '''
             <div class="mb-3">
               <input type="password" id="registerPassword" class="form-control" placeholder="Contraseña" required>
             </div>
+            <!-- El campo de tipo se establece desde la elección -->
             <div class="mb-3">
-              <label for="userType" class="form-label">Tipo de Usuario:</label>
-              <select id="userType" class="form-select" required onchange="toggleSellerFields(this.value)">
-                <option value="buyer">Comprador</option>
-                <option value="seller">Vendedor</option>
-              </select>
+              <input type="hidden" id="userType" value="buyer">
             </div>
             <div id="sellerExtraFields" style="display:none;">
               <div class="mb-3"><input type="text" id="cedula" class="form-control" placeholder="Cédula" required></div>
@@ -267,10 +272,35 @@ HTML_TEMPLATE = '''
     </div>
   </div>
   
-  <!-- Modal de Chat (se activa solo si el usuario está logueado) -->
+  <!-- Modal de Login (Bootstrap) -->
+  <div id="loginModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <div class="modal-header">
+          <h5 class="modal-title">Iniciar Sesión</h5>
+          <button type="button" class="btn-close" onclick="closeLoginModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label">Correo Electrónico</label>
+              <input type="email" id="loginEmail" class="form-control" placeholder="ejemplo@dominio.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label">Contraseña</label>
+              <input type="password" id="loginPassword" class="form-control" placeholder="Contraseña" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal de Chat -->
   <div id="chatModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content p-3">
         <div class="modal-header">
           <h5 class="modal-title">Chat con <span id="chatWith"></span></h5>
           <button type="button" class="btn-close" onclick="closeChatModal()"></button>
@@ -286,7 +316,7 @@ HTML_TEMPLATE = '''
     </div>
   </div>
   
-  <!-- Modal de Imágenes y Modal de Detalle se mantienen con la estructura personalizada -->
+  <!-- Modal de Imágenes -->
   <div id="productImagesModal" class="modal">
     <div class="modal-dialog">
       <div class="modal-content p-3">
@@ -300,6 +330,7 @@ HTML_TEMPLATE = '''
     </div>
   </div>
   
+  <!-- Modal de Detalle del Producto -->
   <div id="productDetailModal" class="modal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content p-3">
@@ -346,25 +377,47 @@ HTML_TEMPLATE = '''
   
   <button class="dark-toggle" onclick="toggleTheme()">Modo Oscuro</button>
   
-  <!-- JavaScript: Bootstrap Bundle y lógica personalizada -->
+  <!-- Bootstrap Bundle y JavaScript personalizado -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Función para actualizar el menú según estado de autenticación
-    function updateNav() {
-      if(currentUser) {
-        document.getElementById('navBuyerPanelItem').style.display = 'block';
-        document.getElementById('navSellerPanelItem').style.display = 'block';
-        document.getElementById('navLoginItem').style.display = 'none';
-        document.getElementById('navRegisterItem').style.display = 'none';
+    // Funciones para manejo de modales de registro
+    function showRegisterChoiceModal() {
+      var modal = new bootstrap.Modal(document.getElementById('registerChoiceModal'));
+      modal.show();
+    }
+    function closeRegisterChoiceModal() {
+      var el = document.getElementById('registerChoiceModal');
+      var modal = bootstrap.Modal.getInstance(el);
+      if(modal) modal.hide();
+    }
+    function selectRegisterType(type) {
+      document.getElementById('userType').value = type;
+      toggleSellerFields(type);
+      closeRegisterChoiceModal();
+      var modal = new bootstrap.Modal(document.getElementById('registerModal'));
+      modal.show();
+    }
+    
+    // Función para controlar acceso a paneles o acciones de compra
+    function checkAccess(type) {
+      if (!currentUser) {
+        // Forzar registro según el tipo deseado
+        selectRegisterType(type);
       } else {
-        document.getElementById('navBuyerPanelItem').style.display = 'none';
-        document.getElementById('navSellerPanelItem').style.display = 'none';
-        document.getElementById('navLoginItem').style.display = 'block';
-        document.getElementById('navRegisterItem').style.display = 'none'; // Registro oculto en este ejemplo
+        if(type === 'seller') showSection('sellerPanel');
+        else showSection('buyerPanel');
+      }
+    }
+    function checkAccessCart() {
+      if (!currentUser) {
+        alert("Debes registrarte o iniciar sesión para ver el carrito.");
+        selectRegisterType('buyer');
+      } else {
+        showSection('cartPanel');
       }
     }
     
-    // Variables globales
+    // Variables globales y datos simulados
     let users = JSON.parse(localStorage.getItem('users')) || [];
     let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
     let sellerEarnings = parseFloat(localStorage.getItem('sellerEarnings')) || 0;
@@ -375,7 +428,6 @@ HTML_TEMPLATE = '''
     let chatSessions = JSON.parse(localStorage.getItem('chatSessions')) || {};
     let currentChatOrderId = null;
     
-    // Productos iniciales
     let products = [
       { id: 1, name: 'Producto 1', description: 'Descripción breve del producto 1', price: 10.00, images: ['https://via.placeholder.com/300x200','https://via.placeholder.com/300x200/AAAAAA'], seller: "default@seller.com", reviews: [] },
       { id: 2, name: 'Producto 2', description: 'Descripción breve del producto 2', price: 20.00, images: ['https://via.placeholder.com/300x200'], seller: "default@seller.com", reviews: [] },
@@ -383,7 +435,6 @@ HTML_TEMPLATE = '''
       { id: 4, name: 'Producto 4', description: 'Descripción breve del producto 4', price: 8.00, images: ['https://via.placeholder.com/300x200'], seller: "default@seller.com", reviews: [] }
     ];
     
-    // Variables para imágenes y detalle
     let currentProductImages = [];
     let currentImageIndex = 0;
     let currentDetailProduct = null;
@@ -416,8 +467,8 @@ HTML_TEMPLATE = '''
               <p class="text-danger fw-bold">$${product.price.toFixed(2)}</p>
             </div>
             <div class="card-footer">
-              <button class="btn btn-sm btn-primary" onclick="simulatePayment(${product.id})">Comprar</button>
-              <button class="btn btn-sm btn-warning" onclick="addToCart(${product.id}, this)">Agregar al carrito</button>
+              <button class="btn btn-sm btn-primary" onclick="if(!currentUser){ alert('Debes registrarte para comprar.'); selectRegisterType('buyer'); } else { simulatePayment(${product.id}); }">Comprar</button>
+              <button class="btn btn-sm btn-warning" onclick="if(!currentUser){ alert('Debes registrarte para agregar al carrito.'); selectRegisterType('buyer'); } else { addToCart(${product.id}, this); }">Agregar al carrito</button>
             </div>
           </div>
         `;
@@ -426,6 +477,11 @@ HTML_TEMPLATE = '''
     }
     
     function simulatePayment(productId) {
+      if(!currentUser){
+        alert("Debes registrarte para comprar.");
+        selectRegisterType('buyer');
+        return;
+      }
       const product = products.find(p => p.id === productId);
       let method = prompt("Seleccione el método de pago:\n1. Bancolombia\n2. Nequi\n3. Efectivo", "1");
       let methodText = (method === "1") ? "Bancolombia" : (method === "2") ? "Nequi" : (method === "3") ? "Efectivo" : "Método no especificado";
@@ -434,7 +490,7 @@ HTML_TEMPLATE = '''
       let order = {
         orderId: Date.now(),
         product: product,
-        buyer: currentUser ? currentUser.email : "anonimo@comprador.com",
+        buyer: currentUser.email,
         seller: product.seller,
         status: "En proceso",
         buyerNotified: false
@@ -447,10 +503,15 @@ Método: ${methodText}
 Comisión 2%: $${commission.toFixed(2)}
 El vendedor recibirá: $${sellerReceives.toFixed(2)}.
 Una vez confirmada la compra se desbloqueará el chat.`);
-      if(currentUser && currentUser.type === "buyer") renderBuyerOrders();
+      renderBuyerOrders();
     }
     
     function addToCart(productId, btnElement) {
+      if(!currentUser){
+        alert("Debes registrarte para agregar al carrito.");
+        selectRegisterType('buyer');
+        return;
+      }
       const product = products.find(p => p.id === productId);
       cart.push(product);
       localStorage.setItem('cart', JSON.stringify(cart));
@@ -484,12 +545,17 @@ Una vez confirmada la compra se desbloqueará el chat.`);
     }
     
     function checkoutCart() {
+      if(!currentUser){
+        alert("Debes registrarte para ver el carrito.");
+        selectRegisterType('buyer');
+        return;
+      }
       if(cart.length === 0) { alert("El carrito está vacío."); return; }
       cart.forEach(product => {
         let order = {
           orderId: Date.now() + Math.floor(Math.random()*1000),
           product: product,
-          buyer: currentUser ? currentUser.email : "anonimo@comprador.com",
+          buyer: currentUser.email,
           seller: product.seller,
           status: "En proceso",
           buyerNotified: false
@@ -501,7 +567,7 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       localStorage.setItem('cart', JSON.stringify(cart));
       renderCart();
       alert("Órdenes generadas. Revisa tu panel de órdenes.");
-      if(currentUser && currentUser.type === "buyer") renderBuyerOrders();
+      renderBuyerOrders();
     }
     
     function filterProducts() {
@@ -533,13 +599,13 @@ Una vez confirmada la compra se desbloqueará el chat.`);
     function renderBuyerOrders() {
       const container = document.getElementById('buyerOrders');
       container.innerHTML = "";
-      orders.filter(o => o.buyer === (currentUser ? currentUser.email : ""))
+      orders.filter(o => o.buyer === currentUser.email)
             .forEach(order => {
               let div = document.createElement('div');
               div.className = 'mb-2 p-2 border rounded animate__animated animate__fadeIn';
               div.innerHTML = `<strong>Orden ${order.orderId}</strong> - ${order.product.name} - Estado: ${order.status}`;
               if(order.status === "En proceso") { 
-                div.innerHTML += `<br><button class="btn btn-sm btn-secondary mt-1" onclick="openChatModal(${order.orderId})">Chat</button>`; 
+                div.innerHTML += `<br><button class="btn btn-sm btn-secondary mt-1" onclick="openChatModal(${order.orderId})">Chat</button>`;
               }
               container.appendChild(div);
             });
@@ -549,7 +615,7 @@ Una vez confirmada la compra se desbloqueará el chat.`);
     function renderSellerOrders() {
       const container = document.getElementById('sellerOrders');
       container.innerHTML = "";
-      orders.filter(o => o.seller === (currentUser ? currentUser.email : ""))
+      orders.filter(o => o.seller === currentUser.email)
             .forEach(order => {
               let div = document.createElement('div');
               div.className = 'mb-2 p-2 border rounded animate__animated animate__fadeIn';
@@ -595,11 +661,25 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       display.innerHTML = "<p>Ganancias: $" + sellerEarnings.toFixed(2) + "</p>";
     }
     
-    function showLoginModal() { document.getElementById('loginModal').style.display = 'block'; }
-    function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
-    function showRegisterModal() { document.getElementById('registerModal').style.display = 'block'; }
-    function closeRegisterModal() { document.getElementById('registerModal').style.display = 'none'; }
-    function toggleSellerFields(value) { document.getElementById('sellerExtraFields').style.display = (value === "seller") ? "block" : "none"; }
+    function showLoginModal() { 
+      var modal = new bootstrap.Modal(document.getElementById('loginModal'));
+      modal.show();
+    }
+    function closeLoginModal() { 
+      var modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+      if(modal) modal.hide();
+    }
+    function showRegisterModal() { 
+      var modal = new bootstrap.Modal(document.getElementById('registerModal'));
+      modal.show();
+    }
+    function closeRegisterModal() { 
+      var modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+      if(modal) modal.hide();
+    }
+    function toggleSellerFields(value) { 
+      document.getElementById('sellerExtraFields').style.display = (value === "seller") ? "block" : "none"; 
+    }
     
     document.getElementById('productImages').addEventListener('change', function(e) {
       const previewContainer = document.getElementById('imagePreview');
@@ -681,8 +761,13 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       const user = { id: Date.now(), name, email, password, type: userType };
       users.push(user);
       localStorage.setItem('users', JSON.stringify(users));
-      alert("Registro exitoso. Por favor, inicia sesión.");
+      alert("Registro exitoso. Ahora puedes acceder al panel de " + (userType === 'seller' ? "Vendedor" : "Comprador") + ".");
       closeRegisterModal();
+      currentUser = user;
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      updateNav();
+      if(user.type === 'seller') showSection('sellerPanel');
+      else showSection('buyerPanel');
     });
     
     document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -704,6 +789,7 @@ Una vez confirmada la compra se desbloqueará el chat.`);
     function openChatModal(orderId) {
       if(!currentUser) {
         alert("Debes iniciar sesión para acceder al chat.");
+        selectRegisterType('buyer');
         return;
       }
       currentChatOrderId = orderId;
@@ -845,7 +931,7 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       console.log("Ejecutando efecto de animación extra: " + effectName);
     }
     
-    // Al cargar la página se actualiza el menú y se renderizan los productos
+    // Al cargar la página, actualizar menú y renderizar productos
     window.onload = function() {
       currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
       updateNav();
