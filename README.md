@@ -12,84 +12,60 @@ HTML_TEMPLATE = '''
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* Variables de color actualizadas a tonos vibrantes */
+    /* Variables */
     :root {
-      --primary-color: #FF5722;      /* Naranja vibrante */
-      --secondary-color: #FFC107;    /* Ámbar */
-      --nav-color: #E91E63;          /* Rosa fuerte */
-      --accent-color: #4CAF50;       /* Verde */
+      --primary-color: #FF5722;
+      --secondary-color: #FFC107;
+      --nav-color: #E91E63;
+      --accent-color: #4CAF50;
       --bg-color: #f4f4f4;
       --text-color: #333;
-      --overlay-color: rgba(0, 0, 0, 0.5);
+      --overlay-color: rgba(0,0,0,0.5);
     }
-    /* Estilos base, animaciones y transición para modo oscuro */
+    /* Estilos base */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Roboto', sans-serif;
       background: var(--bg-color);
       color: var(--text-color);
       line-height: 1.6;
-      animation: fadeIn 1s ease-in;
       transition: background 0.5s, color 0.5s;
     }
-    /* Modo oscuro */
     body.dark {
       background: #121212;
       color: #e0e0e0;
     }
+    img { max-width: 100%; height: auto; }
+    
+    /* Animaciones */
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    /* Animaciones extras (algunos de 10 de 50 ejemplos) */
-    @keyframes rotateIn {
-      from { transform: rotate(-360deg); opacity: 0; }
-      to { transform: rotate(0deg); opacity: 1; }
+    @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); opacity: 1; } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    @keyframes backgroundMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-    @keyframes bounceIn {
-      0% { transform: scale(0.3); opacity: 0; }
-      50% { transform: scale(1.05); opacity: 1; }
-      70% { transform: scale(0.9); }
-      100% { transform: scale(1); }
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-    @keyframes zoomIn {
-      from { transform: scale(0.5); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    @keyframes flipInX {
-      from { transform: perspective(400px) rotateX(90deg); opacity: 0; }
-      to { transform: perspective(400px) rotateX(0deg); opacity: 1; }
-    }
-    /* Clases para aplicar efectos extra */
-    .animate-rotateIn { animation: rotateIn 1s ease-out; }
+    .animate-fadeIn { animation: fadeIn 1s ease-in; }
+    .animate-slideDown { animation: slideDown 0.8s ease-out; }
     .animate-bounceIn { animation: bounceIn 1s ease-out; }
-    .animate-shake { animation: shake 0.5s ease-in-out; }
-    .animate-zoomIn { animation: zoomIn 1s ease-out; }
-    .animate-flipInX { animation: flipInX 1s ease-out; }
-
-    /* Encabezado y Home (modificado para mayor impacto) */
+    .animate-pulse { animation: pulse 2s infinite; }
+    
+    /* Header y sección principal (Home) */
     header {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
       padding: 2rem 1rem;
       text-align: center;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      animation: slideDown 0.8s ease-out, fadeIn 1s ease-in;
-      position: relative;
     }
-    @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    header h1 { font-size: 3rem; margin-bottom: 0.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-    header p { font-size: 1.4rem; margin-bottom: 1rem; }
-
-    /* Nueva sección principal con overlay y botón animado */
+    header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+    header p { font-size: 1.4rem; }
+    
     #home {
       position: relative;
       background: url('https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-      animation: backgroundMove 30s linear infinite;
-      color: white;
       padding: 6rem 1rem;
       text-align: center;
       overflow: hidden;
@@ -102,11 +78,6 @@ HTML_TEMPLATE = '''
       z-index: 1;
     }
     #home > * { position: relative; z-index: 2; }
-    @keyframes backgroundMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
     #home .cta-button {
       margin-top: 2rem;
       padding: 1rem 2rem;
@@ -117,20 +88,21 @@ HTML_TEMPLATE = '''
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.3s, transform 0.3s;
-      animation: pulse 2s infinite, bounceIn 1s;
+      animation: bounceIn 1s, pulse 2s infinite;
     }
-    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-    #home .cta-button:hover { background: #ffc107; transform: scale(1.15); }
+    #home .cta-button:hover {
+      background: #ffc107;
+      transform: scale(1.15);
+    }
     #home .extra-info {
       margin-top: 1.5rem;
       font-size: 1.2rem;
       max-width: 800px;
       margin-left: auto;
       margin-right: auto;
-      animation: fadeIn 2s;
     }
-
-    /* Navegación y contenedores (se mantienen casi igual) */
+    
+    /* Navegación */
     nav {
       background: var(--nav-color);
       padding: 0.75rem 1rem;
@@ -139,7 +111,6 @@ HTML_TEMPLATE = '''
       top: 0;
       z-index: 100;
       box-shadow: 0 2px 3px rgba(0,0,0,0.15);
-      animation: fadeIn 1s ease-in;
     }
     nav a {
       color: white;
@@ -149,10 +120,18 @@ HTML_TEMPLATE = '''
       transition: color 0.3s, transform 0.3s;
       cursor: pointer;
     }
-    nav a:hover { color: var(--accent-color); transform: scale(1.05); }
-    .container { width: 90%; max-width: 1200px; margin: 2rem auto; padding: 1rem; animation: fadeIn 1s ease-in; }
+    nav a:hover {
+      color: var(--accent-color);
+      transform: scale(1.05);
+    }
     
-    /* Grid de Productos (con media queries mejoradas) */
+    /* Contenedores y grid */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -165,21 +144,31 @@ HTML_TEMPLATE = '''
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .product:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-    .product img { width: 100%; display: block; }
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
     .product-content { padding: 1rem; }
     .product-content h3 { margin-bottom: 0.5rem; font-size: 1.2rem; }
     .product-content p { font-size: 0.95rem; line-height: 1.4; }
     .product-content .price { font-weight: bold; margin-top: 0.5rem; font-size: 1rem; color: var(--primary-color); }
     .product-content button {
-      margin-top: 0.75rem; width: 100%; padding: 0.5rem;
-      background: var(--primary-color); border: none; color: white;
-      border-radius: 4px; cursor: pointer;
+      margin-top: 0.75rem;
+      width: 100%;
+      padding: 0.5rem;
+      background: var(--primary-color);
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
       transition: background 0.3s, transform 0.3s;
     }
-    .product-content button:hover { background: var(--nav-color); transform: scale(1.05); }
+    .product-content button:hover {
+      background: var(--nav-color);
+      transform: scale(1.05);
+    }
     
-    /* Paneles, formularios, modales y demás se mantienen similares */
+    /* Paneles */
     .panel {
       display: none;
       background: white;
@@ -187,36 +176,103 @@ HTML_TEMPLATE = '''
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       margin-bottom: 2rem;
-      animation: slideUp 0.8s ease-out;
     }
-    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .panel.active { display: block; }
     
-    /* Formularios, previsualización, modales (se mantienen iguales) */
+    /* Formularios */
     form input, form select, form textarea, form button {
-      width: 100%; padding: 0.75rem; margin-bottom: 0.75rem;
-      font-size: 1rem; border-radius: 4px; border: 1px solid #ccc;
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
       transition: border 0.3s;
     }
-    form input:focus, form select:focus, form textarea:focus { border-color: var(--primary-color); outline: none; }
-    form button { background: var(--primary-color); border: none; color: white; cursor: pointer; transition: background 0.3s, transform 0.3s; }
-    form button:hover { background: var(--nav-color); transform: scale(1.05); }
-    
-    /* Responsive: Ajustes para pantallas pequeñas */
-    @media(max-width: 768px) {
-      header h1 { font-size: 2.5rem; }
-      header p { font-size: 1.2rem; }
-      .cta-button { font-size: 1.1rem; padding: 0.8rem 1.5rem; }
-      .container { padding: 0.5rem; }
-      .product { grid-column: span 2; }
+    form input:focus, form select:focus, form textarea:focus {
+      border-color: var(--primary-color);
+      outline: none;
     }
-    @media(max-width: 480px) {
-      header h1 { font-size: 2rem; }
-      .cta-button { font-size: 1rem; padding: 0.5rem 1rem; }
-      .product { grid-column: span 1; }
+    form button {
+      background: var(--primary-color);
+      border: none;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    form button:hover {
+      background: var(--nav-color);
+      transform: scale(1.05);
     }
     
-    /* Botón fijo para Modo Oscuro */
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: var(--overlay-color);
+      animation: fadeIn 0.5s;
+    }
+    .modal-content {
+      background: #fff;
+      margin: 10% auto;
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 8px;
+      position: relative;
+      animation: slideIn 0.5s;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      color: #333;
+      cursor: pointer;
+    }
+    
+    /* Login Modal (limpio y ordenado) */
+    .login-content h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--nav-color);
+    }
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group label {
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+      color: var(--primary-color);
+    }
+    .btn-login {
+      padding: 0.75rem;
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .btn-login:hover {
+      background: var(--nav-color);
+      transform: scale(1.05);
+    }
+    
+    /* Dark mode toggle button */
     .dark-toggle {
       position: fixed;
       bottom: 20px;
@@ -231,21 +287,26 @@ HTML_TEMPLATE = '''
       transition: transform 0.3s;
     }
     .dark-toggle:hover { transform: scale(1.1); }
+    
+    /* Responsive */
+    @media(max-width: 768px) {
+      header h1 { font-size: 2.5rem; }
+      header p { font-size: 1.2rem; }
+      .cta-button { font-size: 1.1rem; padding: 0.8rem 1.5rem; }
+      .container { padding: 0.5rem; }
+    }
+    @media(max-width: 480px) {
+      header h1 { font-size: 2rem; }
+      .cta-button { font-size: 1rem; padding: 0.5rem 1rem; }
+    }
   </style>
 </head>
 <body>
-  <!-- Efectos de Sonido -->
-  <audio id="soundPurchase" src="https://example.com/sound_purchase.mp3"></audio>
-  <audio id="soundCart" src="https://example.com/sound_cart.mp3"></audio>
-  <audio id="soundRegister" src="https://example.com/sound_register.mp3"></audio>
-  <audio id="soundConfirm" src="https://example.com/sound_confirm.mp3"></audio>
-  <audio id="soundChat" src="https://example.com/sound_chat.mp3"></audio>
-  
-  <!-- Encabezado y Navegación -->
-  <header class="animate-flipInX">
+  <header class="animate-slideDown">
     <h1>LA W - Marketplace</h1>
     <p>Compra, vende y descubre productos con estilo</p>
   </header>
+  
   <nav>
     <a onclick="showSection('home')">Inicio</a>
     <a onclick="showSection('marketplace')">Productos</a>
@@ -256,14 +317,12 @@ HTML_TEMPLATE = '''
     <a onclick="showRegisterModal()">Registrarse</a>
   </nav>
   
-  <!-- Sección Home (más llamativa) -->
   <div class="container" id="home">
-    <h2 class="animate-zoomIn">¡Bienvenido a LA W!</h2>
-    <p class="extra-info animate-bounceIn">Descubre el marketplace más dinámico, seguro y moderno. Encuentra todo lo que necesitas y disfruta de una experiencia única.</p>
-    <button class="cta-button animate-pulse" onclick="showSection('marketplace')">Explora Productos</button>
+    <h2 class="animate-bounceIn">¡Bienvenido a LA W!</h2>
+    <p class="extra-info">Descubre el marketplace más dinámico, seguro y moderno. Encuentra todo lo que necesitas y disfruta de una experiencia única.</p>
+    <button class="cta-button" onclick="showSection('marketplace')">Explora Productos</button>
   </div>
   
-  <!-- Sección Marketplace -->
   <div class="container" id="marketplace" style="display:none;">
     <h2>Productos</h2>
     <div class="search-bar">
@@ -274,7 +333,6 @@ HTML_TEMPLATE = '''
     </div>
   </div>
   
-  <!-- Paneles: Carrito, Vendedor, Comprador (se mantienen igual) -->
   <div class="container panel" id="cartPanel">
     <h2>Carrito de Compras</h2>
     <ul id="cartItems"></ul>
@@ -316,19 +374,26 @@ HTML_TEMPLATE = '''
     </div>
   </div>
   
-  <!-- Modales (Login, Registro, Chat, Imágenes, Detalle) se mantienen sin cambios -->
+  <!-- Modal de Login (Ordenado) -->
   <div id="loginModal" class="modal">
-    <div class="modal-content">
+    <div class="modal-content login-content">
       <span class="close" onclick="closeLoginModal()">&times;</span>
       <h2>Iniciar Sesión</h2>
-      <form id="loginForm">
-        <input type="email" id="loginEmail" placeholder="Email" required>
-        <input type="password" id="loginPassword" placeholder="Contraseña" required>
-        <button type="submit">Entrar</button>
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="loginEmail">Correo Electrónico</label>
+          <input type="email" id="loginEmail" placeholder="ejemplo@dominio.com" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Contraseña</label>
+          <input type="password" id="loginPassword" placeholder="Contraseña" required>
+        </div>
+        <button type="submit" class="btn-login">Entrar</button>
       </form>
     </div>
   </div>
   
+  <!-- Modal de Registro (Se mantiene similar) -->
   <div id="registerModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeRegisterModal()">&times;</span>
@@ -357,6 +422,7 @@ HTML_TEMPLATE = '''
     </div>
   </div>
   
+  <!-- Modal de Chat -->
   <div id="chatModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeChatModal()">&times;</span>
@@ -367,6 +433,7 @@ HTML_TEMPLATE = '''
     </div>
   </div>
   
+  <!-- Modal de Imágenes -->
   <div id="productImagesModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeProductImagesModal()">&times;</span>
@@ -378,6 +445,7 @@ HTML_TEMPLATE = '''
     </div>
   </div>
   
+  <!-- Modal de Detalle del Producto -->
   <div id="productDetailModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeProductDetailModal()">&times;</span>
@@ -409,17 +477,14 @@ HTML_TEMPLATE = '''
     </div>
   </div>
   
-  <!-- Pie de Página -->
   <footer>
     <p>&copy; 2025 LA W. Todos los derechos reservados.</p>
   </footer>
   
-  <!-- Botón fijo para alternar Modo Oscuro -->
   <button class="dark-toggle" onclick="toggleTheme()">Modo Oscuro</button>
   
-  <!-- JavaScript: Funciones existentes, Nuevas funciones extras y Animaciones -->
   <script>
-    /* Variables globales y simulación de almacenamiento */
+    // Variables globales
     let users = JSON.parse(localStorage.getItem('users')) || [];
     let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
     let sellerEarnings = parseFloat(localStorage.getItem('sellerEarnings')) || 0;
@@ -430,7 +495,7 @@ HTML_TEMPLATE = '''
     let chatSessions = JSON.parse(localStorage.getItem('chatSessions')) || {};
     let currentChatOrderId = null;
     
-    /* Productos iniciales */
+    // Productos iniciales
     let products = [
       { id: 1, name: 'Producto 1', description: 'Descripción breve del producto 1', price: 10.00, images: ['https://via.placeholder.com/300x200', 'https://via.placeholder.com/300x200/AAAAAA'], seller: "default@seller.com", reviews: [] },
       { id: 2, name: 'Producto 2', description: 'Descripción breve del producto 2', price: 20.00, images: ['https://via.placeholder.com/300x200'], seller: "default@seller.com", reviews: [] },
@@ -438,14 +503,13 @@ HTML_TEMPLATE = '''
       { id: 4, name: 'Producto 4', description: 'Descripción breve del producto 4', price: 8.00, images: ['https://via.placeholder.com/300x200'], seller: "default@seller.com", reviews: [] }
     ];
     
-    /* Variables para modales de imágenes y detalle */
+    // Variables para modales y detalle
     let currentProductImages = [];
     let currentImageIndex = 0;
     let currentDetailProduct = null;
     let currentDetailImages = [];
     let currentDetailIndex = 0;
     
-    /* Funciones principales (navegación, renderizado, carrito, etc.) */
     function showSection(sectionId) {
       ['home','marketplace','cartPanel','sellerPanel','buyerPanel'].forEach(id => {
         document.getElementById(id).style.display = 'none';
@@ -462,7 +526,7 @@ HTML_TEMPLATE = '''
       grid.innerHTML = '';
       products.forEach(product => {
         let div = document.createElement('div');
-        div.className = 'product animate-rotateIn';
+        div.className = 'product animate-fadeIn';
         div.innerHTML = `
           <img src="${product.images[0]}" alt="${product.name}">
           <div class="product-content">
@@ -495,7 +559,6 @@ HTML_TEMPLATE = '''
       };
       orders.push(order);
       localStorage.setItem('orders', JSON.stringify(orders));
-      document.getElementById('soundPurchase').play();
       alert(`Orden generada:
 Producto: ${product.name} por $${product.price.toFixed(2)}
 Método: ${methodText}
@@ -511,7 +574,6 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       localStorage.setItem('cart', JSON.stringify(cart));
       btnElement.style.transform = 'scale(1.2)';
       setTimeout(() => { btnElement.style.transform = 'scale(1)'; }, 300);
-      document.getElementById('soundCart').play();
       alert(`${product.name} agregado al carrito.`);
     }
     
@@ -555,7 +617,6 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       cart = [];
       localStorage.setItem('cart', JSON.stringify(cart));
       renderCart();
-      document.getElementById('soundPurchase').play();
       alert("Órdenes generadas. Revisa tu panel de órdenes.");
       if(currentUser && currentUser.type === "buyer") renderBuyerOrders();
     }
@@ -592,8 +653,9 @@ Una vez confirmada la compra se desbloqueará el chat.`);
               let div = document.createElement('div');
               div.className = 'order';
               div.innerHTML = `<strong>Orden ${order.orderId}</strong> - ${order.product.name} - Estado: ${order.status}`;
-              if(order.status === "En proceso") { div.innerHTML += `<br><button onclick="openChatModal(${order.orderId})">Chat</button>`; }
-              else if(order.status === "Confirmada" && !order.buyerNotified) { 
+              if(order.status === "En proceso") { 
+                div.innerHTML += `<br><button onclick="openChatModal(${order.orderId})">Chat</button>`; 
+              } else if(order.status === "Confirmada" && !order.buyerNotified) {
                 div.innerHTML += `<div class="info">¡Felicitaciones! Has hecho tu primera compra, gracias por confiar en nosotros.</div>`;
                 order.buyerNotified = true;
                 localStorage.setItem('orders', JSON.stringify(orders));
@@ -611,7 +673,7 @@ Una vez confirmada la compra se desbloqueará el chat.`);
               let div = document.createElement('div');
               div.className = 'order';
               div.innerHTML = `<strong>Orden ${order.orderId}</strong> - ${order.product.name} - Estado: ${order.status}`;
-              if(order.status === "En proceso") { 
+              if(order.status === "En proceso") {
                 div.innerHTML += `<br><button onclick="confirmOrder(${order.orderId})">Confirmar Pago</button>`;
                 div.innerHTML += `<button onclick="openChatModal(${order.orderId})">Chat</button>`;
               }
@@ -631,7 +693,6 @@ Una vez confirmada la compra se desbloqueará el chat.`);
         localStorage.setItem('orders', JSON.stringify(orders));
         renderSellerOrders();
         updateSellerEarningsDisplay();
-        document.getElementById('soundConfirm').play();
         alert("Orden " + orderId + " confirmada. El pago se ha reflejado en tu billetera.");
       }
     }
@@ -737,39 +798,8 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       const user = { id: Date.now(), name, email, password, type: userType };
       users.push(user);
       localStorage.setItem('users', JSON.stringify(users));
-      document.getElementById('soundRegister').play();
-      if(userType === "seller") {
-        const cedula = document.getElementById('cedula').value;
-        const telefono = document.getElementById('telefono').value;
-        const ubicacion = document.getElementById('ubicacion').value;
-        const cuentaBancaria = document.getElementById('cuentaBancaria').value;
-        const expedienteJudicialInput = document.getElementById('expedienteJudicial');
-        const expedienteDisciplinarioInput = document.getElementById('expedienteDisciplinario');
-        function readFile(file) {
-          return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-          });
-        }
-        Promise.all([
-          readFile(expedienteJudicialInput.files[0]),
-          readFile(expedienteDisciplinarioInput.files[0])
-        ]).then(results => {
-          secureVault[email] = {
-            cedula, telefono, ubicacion, cuentaBancaria,
-            expedienteJudicial: results[0],
-            expedienteDisciplinario: results[1]
-          };
-          localStorage.setItem('secureVault', JSON.stringify(secureVault));
-          alert("Registro exitoso como vendedor. Por favor, inicia sesión.");
-          closeRegisterModal();
-        }).catch(err => { alert("Error al leer los archivos. Inténtalo de nuevo."); });
-      } else {
-        alert("Registro exitoso. Por favor, inicia sesión.");
-        closeRegisterModal();
-      }
+      alert("Registro exitoso. Por favor, inicia sesión.");
+      closeRegisterModal();
     });
     
     document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -787,7 +817,6 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       } else { alert("Credenciales incorrectas."); }
     });
     
-    /* Funciones para Chat */
     function openChatModal(orderId) {
       currentChatOrderId = orderId;
       document.getElementById('chatModal').style.display = 'block';
@@ -795,18 +824,25 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       document.getElementById('chatWith').innerText = currentUser.type === 'buyer' ? order.seller : order.buyer;
       renderChatMessages();
     }
+    
     function closeChatModal() {
       document.getElementById('chatModal').style.display = 'none';
       currentChatOrderId = null;
       document.getElementById('chatInput').value = "";
     }
+    
     function renderChatMessages() {
       const chatBox = document.getElementById('chatMessages');
       chatBox.innerHTML = "";
       let messages = chatSessions[currentChatOrderId] || [];
-      messages.forEach(msg => { let p = document.createElement('p'); p.innerText = msg; chatBox.appendChild(p); });
+      messages.forEach(msg => {
+        let p = document.createElement('p');
+        p.innerText = msg;
+        chatBox.appendChild(p);
+      });
       chatBox.scrollTop = chatBox.scrollHeight;
     }
+    
     function sendChatMessage() {
       const input = document.getElementById('chatInput');
       const message = input.value.trim();
@@ -816,10 +852,8 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       localStorage.setItem('chatSessions', JSON.stringify(chatSessions));
       input.value = "";
       renderChatMessages();
-      document.getElementById('soundChat').play();
     }
     
-    /* Modal de Imágenes (Lightbox) */
     function openProductImages(productId) {
       const product = products.find(p => p.id === productId);
       if(!product || product.images.length === 0) return;
@@ -828,17 +862,21 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       document.getElementById('productModalImage').src = currentProductImages[currentImageIndex];
       document.getElementById('productImagesModal').style.display = 'block';
     }
-    function closeProductImagesModal() { document.getElementById('productImagesModal').style.display = 'none'; }
+    
+    function closeProductImagesModal() {
+      document.getElementById('productImagesModal').style.display = 'none';
+    }
+    
     function prevProductImage() {
       currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : currentProductImages.length - 1;
       document.getElementById('productModalImage').src = currentProductImages[currentImageIndex];
     }
+    
     function nextProductImage() {
       currentImageIndex = (currentImageIndex < currentProductImages.length - 1) ? currentImageIndex + 1 : 0;
       document.getElementById('productModalImage').src = currentProductImages[currentImageIndex];
     }
     
-    /* Modal de Detalle del Producto (con reseñas) */
     function openProductDetail(productId) {
       const product = products.find(p => p.id === productId);
       if(!product) return;
@@ -853,26 +891,39 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       renderReviews();
       document.getElementById('productDetailModal').style.display = 'block';
     }
-    function closeProductDetailModal() { document.getElementById('productDetailModal').style.display = 'none'; }
+    
+    function closeProductDetailModal() {
+      document.getElementById('productDetailModal').style.display = 'none';
+    }
+    
     function prevDetailImage() {
       currentDetailIndex = (currentDetailIndex > 0) ? currentDetailIndex - 1 : currentDetailImages.length - 1;
       document.getElementById('detailModalImage').src = currentDetailImages[currentDetailIndex];
     }
+    
     function nextDetailImage() {
       currentDetailIndex = (currentDetailIndex < currentDetailImages.length - 1) ? currentDetailIndex + 1 : 0;
       document.getElementById('detailModalImage').src = currentDetailImages[currentDetailIndex];
     }
+    
     function updateAverageRating() {
       const reviews = currentDetailProduct.reviews;
-      if(reviews.length === 0) { document.getElementById('averageRating').innerText = "Sin calificar"; return; }
+      if(reviews.length === 0) {
+        document.getElementById('averageRating').innerText = "Sin calificar";
+        return;
+      }
       let sum = reviews.reduce((acc, rev) => acc + parseInt(rev.rating), 0);
       let avg = (sum / reviews.length).toFixed(1);
       document.getElementById('averageRating').innerText = avg + " estrellas";
     }
+    
     function renderReviews() {
       const container = document.getElementById('reviewsContainer');
       container.innerHTML = "";
-      if(currentDetailProduct.reviews.length === 0) { container.innerHTML = "<p>No hay reseñas.</p>"; return; }
+      if(currentDetailProduct.reviews.length === 0) {
+        container.innerHTML = "<p>No hay reseñas.</p>";
+        return;
+      }
       currentDetailProduct.reviews.forEach(rev => {
         let div = document.createElement('div');
         div.className = "review";
@@ -880,6 +931,7 @@ Una vez confirmada la compra se desbloqueará el chat.`);
         container.appendChild(div);
       });
     }
+    
     document.getElementById('reviewForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const rating = document.getElementById('reviewRating').value;
@@ -893,21 +945,18 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       localStorage.setItem('products', JSON.stringify(products));
     });
     
-    /* EXTRA: Generar 50 funciones de lógica extra automáticamente */
-    for(let i=1; i<=50; i++){
+    /* 50 Funciones Extra de Lógica */
+    for(let i = 1; i <= 50; i++){
       window['extraLogic' + i] = function(){
         console.log("Ejecutando lógica extra " + i);
       }
     }
     
-    /* EXTRA: Funciones de animación extra (ejemplos sencillos) */
-    function extraAnimationEffect(effectName){
-      alert("Ejecutando efecto de animación extra: " + effectName);
+    /* Función Extra para Efectos de Animación */
+    function extraAnimationEffect(effectName) {
+      console.log("Ejecutando efecto de animación extra: " + effectName);
     }
     
-    /* Fin de funciones extras */
-    
-    /* Inicialización */
     window.onload = function() {
       renderProducts();
       sellerProducts = JSON.parse(localStorage.getItem('sellerProducts')) || [];
