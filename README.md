@@ -9,10 +9,13 @@ HTML_TEMPLATE = '''
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LA W - Marketplace Mejorado</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* Variables */
     :root {
       --primary-color: #FF5722;
       --secondary-color: #FFC107;
@@ -22,13 +25,11 @@ HTML_TEMPLATE = '''
       --text-color: #333;
       --overlay-color: rgba(0,0,0,0.5);
     }
-    /* Estilos base */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Estilos base personalizados */
     body {
       font-family: 'Roboto', sans-serif;
       background: var(--bg-color);
       color: var(--text-color);
-      line-height: 1.6;
       transition: background 0.5s, color 0.5s;
     }
     body.dark {
@@ -36,23 +37,7 @@ HTML_TEMPLATE = '''
       color: #e0e0e0;
     }
     img { max-width: 100%; height: auto; }
-    
-    /* Animaciones */
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); opacity: 1; } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
-    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-    @keyframes backgroundMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .animate-fadeIn { animation: fadeIn 1s ease-in; }
-    .animate-slideDown { animation: slideDown 0.8s ease-out; }
-    .animate-bounceIn { animation: bounceIn 1s ease-out; }
-    .animate-pulse { animation: pulse 2s infinite; }
-    
-    /* Header y sección principal (Home) */
+    /* Header y sección Home */
     header {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
@@ -62,7 +47,6 @@ HTML_TEMPLATE = '''
     }
     header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
     header p { font-size: 1.4rem; }
-    
     #home {
       position: relative;
       background: url('https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
@@ -88,7 +72,6 @@ HTML_TEMPLATE = '''
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.3s, transform 0.3s;
-      animation: bounceIn 1s, pulse 2s infinite;
     }
     #home .cta-button:hover {
       background: #ffc107;
@@ -101,178 +84,12 @@ HTML_TEMPLATE = '''
       margin-left: auto;
       margin-right: auto;
     }
+    /* Ajustes para productos, paneles y formularios se mantienen similares, usando la clase container y grid de Bootstrap */
+    .product-grid { margin-top: 1rem; }
+    .product { transition: transform 0.3s, box-shadow 0.3s; }
+    .product:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     
-    /* Navegación */
-    nav {
-      background: var(--nav-color);
-      padding: 0.75rem 1rem;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 3px rgba(0,0,0,0.15);
-    }
-    nav a {
-      color: white;
-      margin: 0 1rem;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s, transform 0.3s;
-      cursor: pointer;
-    }
-    nav a:hover {
-      color: var(--accent-color);
-      transform: scale(1.05);
-    }
-    
-    /* Contenedores y grid */
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 1rem;
-    }
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-    .product {
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .product:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .product-content { padding: 1rem; }
-    .product-content h3 { margin-bottom: 0.5rem; font-size: 1.2rem; }
-    .product-content p { font-size: 0.95rem; line-height: 1.4; }
-    .product-content .price { font-weight: bold; margin-top: 0.5rem; font-size: 1rem; color: var(--primary-color); }
-    .product-content button {
-      margin-top: 0.75rem;
-      width: 100%;
-      padding: 0.5rem;
-      background: var(--primary-color);
-      border: none;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-    }
-    .product-content button:hover {
-      background: var(--nav-color);
-      transform: scale(1.05);
-    }
-    
-    /* Paneles */
-    .panel {
-      display: none;
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      margin-bottom: 2rem;
-    }
-    
-    /* Formularios */
-    form input, form select, form textarea, form button {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 0.75rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      transition: border 0.3s;
-    }
-    form input:focus, form select:focus, form textarea:focus {
-      border-color: var(--primary-color);
-      outline: none;
-    }
-    form button {
-      background: var(--primary-color);
-      border: none;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-    }
-    form button:hover {
-      background: var(--nav-color);
-      transform: scale(1.05);
-    }
-    
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: var(--overlay-color);
-      animation: fadeIn 0.5s;
-    }
-    .modal-content {
-      background: #fff;
-      margin: 10% auto;
-      padding: 1.5rem;
-      width: 90%;
-      max-width: 400px;
-      border-radius: 8px;
-      position: relative;
-      animation: slideIn 0.5s;
-    }
-    @keyframes slideIn {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 1.5rem;
-      color: #333;
-      cursor: pointer;
-    }
-    
-    /* Login Modal (limpio y ordenado) */
-    .login-content h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-      color: var(--nav-color);
-    }
-    .login-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-    }
-    .form-group label {
-      margin-bottom: 0.3rem;
-      font-weight: 500;
-      color: var(--primary-color);
-    }
-    .btn-login {
-      padding: 0.75rem;
-      background: var(--primary-color);
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: background 0.3s, transform 0.3s;
-    }
-    .btn-login:hover {
-      background: var(--nav-color);
-      transform: scale(1.05);
-    }
-    
-    /* Dark mode toggle button */
+    /* Dark mode toggle */
     .dark-toggle {
       position: fixed;
       bottom: 20px;
@@ -287,73 +104,79 @@ HTML_TEMPLATE = '''
       transition: transform 0.3s;
     }
     .dark-toggle:hover { transform: scale(1.1); }
-    
-    /* Responsive */
-    @media(max-width: 768px) {
-      header h1 { font-size: 2.5rem; }
-      header p { font-size: 1.2rem; }
-      .cta-button { font-size: 1.1rem; padding: 0.8rem 1.5rem; }
-      .container { padding: 0.5rem; }
-    }
-    @media(max-width: 480px) {
-      header h1 { font-size: 2rem; }
-      .cta-button { font-size: 1rem; padding: 0.5rem 1rem; }
-    }
   </style>
 </head>
 <body>
-  <header class="animate-slideDown">
-    <h1>LA W - Marketplace</h1>
-    <p>Compra, vende y descubre productos con estilo</p>
-  </header>
-  
-  <nav>
-    <a onclick="showSection('home')">Inicio</a>
-    <a onclick="showSection('marketplace')">Productos</a>
-    <a onclick="showSection('cartPanel')">Carrito</a>
-    <a onclick="showSection('sellerPanel')">Panel Vendedor</a>
-    <a onclick="showSection('buyerPanel')">Panel Comprador</a>
-    <a onclick="showLoginModal()">Iniciar Sesión</a>
-    <a onclick="showRegisterModal()">Registrarse</a>
+  <!-- Navbar usando Bootstrap -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand animate__animated animate__fadeInDown" onclick="showSection('home')">LA W</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" id="navInicio" onclick="showSection('home')">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" id="navMarketplace" onclick="showSection('marketplace')">Productos</a></li>
+          <li class="nav-item"><a class="nav-link" id="navCart" onclick="showSection('cartPanel')">Carrito</a></li>
+          <li class="nav-item" id="navBuyerPanelItem" style="display:none;">
+            <a class="nav-link" id="navBuyerPanel" onclick="showSection('buyerPanel')">Panel Comprador</a>
+          </li>
+          <li class="nav-item" id="navSellerPanelItem" style="display:none;">
+            <a class="nav-link" id="navSellerPanel" onclick="showSection('sellerPanel')">Panel Vendedor</a>
+          </li>
+          <li class="nav-item" id="navLoginItem">
+            <a class="nav-link" id="navLogin" onclick="showLoginModal()">Iniciar Sesión</a>
+          </li>
+          <li class="nav-item" id="navRegisterItem">
+            <a class="nav-link" id="navRegister" onclick="showRegisterModal()">Registrarse</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </nav>
   
-  <div class="container" id="home">
-    <h2 class="animate-bounceIn">¡Bienvenido a LA W!</h2>
-    <p class="extra-info">Descubre el marketplace más dinámico, seguro y moderno. Encuentra todo lo que necesitas y disfruta de una experiencia única.</p>
-    <button class="cta-button" onclick="showSection('marketplace')">Explora Productos</button>
-  </div>
+  <!-- Sección Home (sin opciones de registro ni chat) -->
+  <section id="home" class="container">
+    <h2 class="animate__animated animate__bounceIn animate__delay-1s">¡Bienvenido a LA W!</h2>
+    <p class="extra-info animate__animated animate__fadeInUp animate__delay-2s">Descubre el marketplace más dinámico, seguro y moderno. Encuentra todo lo que necesitas y disfruta de una experiencia única.</p>
+    <button class="btn btn-lg btn-warning cta-button animate__animated animate__zoomIn animate__delay-3s" onclick="showSection('marketplace')">Explora Productos</button>
+  </section>
   
-  <div class="container" id="marketplace" style="display:none;">
-    <h2>Productos</h2>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Buscar productos..." onkeyup="filterProducts()">
+  <!-- Sección Marketplace -->
+  <section id="marketplace" class="container" style="display:none;">
+    <h2 class="animate__animated animate__fadeInDown">Productos</h2>
+    <div class="input-group mb-3">
+      <input type="text" id="searchInput" class="form-control" placeholder="Buscar productos..." onkeyup="filterProducts()">
     </div>
-    <div class="product-grid" id="productGrid">
-      <!-- Productos se cargarán dinámicamente -->
+    <div class="row row-cols-1 row-cols-md-3 g-4 product-grid" id="productGrid">
+      <!-- Aquí se cargarán los productos -->
     </div>
-  </div>
+  </section>
   
-  <div class="container panel" id="cartPanel">
+  <!-- Paneles de Carrito, Vendedor y Comprador (se muestran según selección) -->
+  <section id="cartPanel" class="container panel" style="display:none;">
     <h2>Carrito de Compras</h2>
-    <ul id="cartItems"></ul>
-    <p>Total: <span id="total">$0.00</span></p>
-    <button onclick="checkoutCart()">Comprar Carrito</button>
-  </div>
+    <ul id="cartItems" class="list-group"></ul>
+    <p class="mt-3">Total: <span id="total">$0.00</span></p>
+    <button class="btn btn-primary" onclick="checkoutCart()">Comprar Carrito</button>
+  </section>
   
-  <div class="container panel" id="sellerPanel">
+  <section id="sellerPanel" class="container panel" style="display:none;">
     <h2>Panel Vendedor</h2>
     <p>Aquí puedes agregar y gestionar tus productos.</p>
     <form id="addProductForm">
-      <input type="text" id="productName" placeholder="Nombre del producto" required>
-      <input type="text" id="productDescription" placeholder="Descripción" required>
-      <input type="number" id="productPrice" placeholder="Precio" step="0.01" required>
-      <input type="file" id="productImages" accept="image/*" multiple required>
-      <div class="image-preview" id="imagePreview"></div>
-      <button type="submit">Agregar Producto</button>
+      <input type="text" id="productName" class="form-control mb-2" placeholder="Nombre del producto" required>
+      <input type="text" id="productDescription" class="form-control mb-2" placeholder="Descripción" required>
+      <input type="number" id="productPrice" class="form-control mb-2" placeholder="Precio" step="0.01" required>
+      <input type="file" id="productImages" class="form-control mb-2" accept="image/*" multiple required>
+      <div id="imagePreview" class="mb-2"></div>
+      <button type="submit" class="btn btn-success">Agregar Producto</button>
     </form>
     <hr>
     <h3>Mis Productos</h3>
-    <div class="product-grid" id="sellerProductGrid"></div>
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="sellerProductGrid"></div>
     <hr>
     <h3>Órdenes en Proceso</h3>
     <div id="sellerOrders"></div>
@@ -363,127 +186,184 @@ HTML_TEMPLATE = '''
     <hr>
     <h3>Ganancias del Vendedor</h3>
     <div id="sellerEarningsDisplay"><p>Ganancias: $0.00</p></div>
-  </div>
+  </section>
   
-  <div class="container panel" id="buyerPanel">
+  <section id="buyerPanel" class="container panel" style="display:none;">
     <h2>Panel Comprador</h2>
     <p>Bienvenido, disfruta de tus compras y haz seguimiento de tus órdenes.</p>
     <div id="buyerOrders"></div>
-    <div class="info" style="margin-top:1rem; font-size:0.95rem; color:var(--nav-color);">
-      Una vez confirmada la compra se desbloqueará el chat con el vendedor.
-    </div>
-  </div>
+    <p class="mt-3 text-muted">Una vez confirmada la compra se desbloqueará el chat con el vendedor.</p>
+  </section>
   
-  <!-- Modal de Login (Ordenado) -->
-  <div id="loginModal" class="modal">
-    <div class="modal-content login-content">
-      <span class="close" onclick="closeLoginModal()">&times;</span>
-      <h2>Iniciar Sesión</h2>
-      <form id="loginForm" class="login-form">
-        <div class="form-group">
-          <label for="loginEmail">Correo Electrónico</label>
-          <input type="email" id="loginEmail" placeholder="ejemplo@dominio.com" required>
+  <!-- Modal de Login (Bootstrap Modal) -->
+  <div id="loginModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Iniciar Sesión</h5>
+          <button type="button" class="btn-close" onclick="closeLoginModal()"></button>
         </div>
-        <div class="form-group">
-          <label for="loginPassword">Contraseña</label>
-          <input type="password" id="loginPassword" placeholder="Contraseña" required>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label">Correo Electrónico</label>
+              <input type="email" id="loginEmail" class="form-control" placeholder="ejemplo@dominio.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label">Contraseña</label>
+              <input type="password" id="loginPassword" class="form-control" placeholder="Contraseña" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+          </form>
         </div>
-        <button type="submit" class="btn-login">Entrar</button>
-      </form>
+      </div>
     </div>
   </div>
   
-  <!-- Modal de Registro (Se mantiene similar) -->
-  <div id="registerModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeRegisterModal()">&times;</span>
-      <h2>Registrarse</h2>
-      <form id="registerForm">
-        <input type="text" id="registerName" placeholder="Nombre completo" required>
-        <input type="email" id="registerEmail" placeholder="Email" required>
-        <input type="password" id="registerPassword" placeholder="Contraseña" required>
-        <label for="userType">Tipo de Usuario:</label>
-        <select id="userType" required onchange="toggleSellerFields(this.value)">
-          <option value="buyer">Comprador</option>
-          <option value="seller">Vendedor</option>
-        </select>
-        <div id="sellerExtraFields">
-          <input type="text" id="cedula" placeholder="Cédula" required>
-          <input type="text" id="telefono" placeholder="Número de Teléfono" required>
-          <input type="text" id="ubicacion" placeholder="Ubicación" required>
-          <input type="text" id="cuentaBancaria" placeholder="Cuenta Bancaria" required>
-          <label>Expediente Judicial (Archivo, PDF o imagen):</label>
-          <input type="file" id="expedienteJudicial" accept="image/*,application/pdf" required>
-          <label>Expediente Disciplinario (Archivo, PDF o imagen):</label>
-          <input type="file" id="expedienteDisciplinario" accept="image/*,application/pdf" required>
+  <!-- Modal de Registro (similar estructura Bootstrap) -->
+  <div id="registerModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Registrarse</h5>
+          <button type="button" class="btn-close" onclick="closeRegisterModal()"></button>
         </div>
-        <button type="submit">Registrarse</button>
-      </form>
+        <div class="modal-body">
+          <form id="registerForm">
+            <div class="mb-3">
+              <input type="text" id="registerName" class="form-control" placeholder="Nombre completo" required>
+            </div>
+            <div class="mb-3">
+              <input type="email" id="registerEmail" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+              <input type="password" id="registerPassword" class="form-control" placeholder="Contraseña" required>
+            </div>
+            <div class="mb-3">
+              <label for="userType" class="form-label">Tipo de Usuario:</label>
+              <select id="userType" class="form-select" required onchange="toggleSellerFields(this.value)">
+                <option value="buyer">Comprador</option>
+                <option value="seller">Vendedor</option>
+              </select>
+            </div>
+            <div id="sellerExtraFields" style="display:none;">
+              <div class="mb-3"><input type="text" id="cedula" class="form-control" placeholder="Cédula" required></div>
+              <div class="mb-3"><input type="text" id="telefono" class="form-control" placeholder="Número de Teléfono" required></div>
+              <div class="mb-3"><input type="text" id="ubicacion" class="form-control" placeholder="Ubicación" required></div>
+              <div class="mb-3"><input type="text" id="cuentaBancaria" class="form-control" placeholder="Cuenta Bancaria" required></div>
+              <div class="mb-3">
+                <label class="form-label">Expediente Judicial (Archivo, PDF o imagen):</label>
+                <input type="file" id="expedienteJudicial" class="form-control" accept="image/*,application/pdf" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Expediente Disciplinario (Archivo, PDF o imagen):</label>
+                <input type="file" id="expedienteDisciplinario" class="form-control" accept="image/*,application/pdf" required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Registrarse</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
   
-  <!-- Modal de Chat -->
-  <div id="chatModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeChatModal()">&times;</span>
-      <h2>Chat con <span id="chatWith"></span></h2>
-      <div id="chatMessages" style="height:200px; overflow-y:auto; border:1px solid #ccc; padding:0.5rem; margin-bottom:1rem;"></div>
-      <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." style="width:80%;">
-      <button onclick="sendChatMessage()">Enviar</button>
+  <!-- Modal de Chat (se activa solo si el usuario está logueado) -->
+  <div id="chatModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Chat con <span id="chatWith"></span></h5>
+          <button type="button" class="btn-close" onclick="closeChatModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div id="chatMessages" class="border p-2 mb-3" style="height:200px; overflow-y:auto;"></div>
+          <div class="input-group">
+            <input type="text" id="chatInput" class="form-control" placeholder="Escribe tu mensaje...">
+            <button class="btn btn-primary" onclick="sendChatMessage()">Enviar</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   
-  <!-- Modal de Imágenes -->
+  <!-- Modal de Imágenes y Modal de Detalle se mantienen con la estructura personalizada -->
   <div id="productImagesModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeProductImagesModal()">&times;</span>
-      <img id="productModalImage" src="" alt="Imagen del Producto">
-      <div style="text-align: center; margin-top: 1rem;">
-        <button onclick="prevProductImage()">Anterior</button>
-        <button onclick="nextProductImage()">Siguiente</button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Modal de Detalle del Producto -->
-  <div id="productDetailModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeProductDetailModal()">&times;</span>
-      <h2 id="detailProductTitle"></h2>
-      <div id="detailProductImages" style="position: relative;">
-        <img id="detailModalImage" src="" alt="Imagen del Producto" style="width:100%;">
-        <div style="text-align: center; margin-top: 0.5rem;">
-          <button onclick="prevDetailImage()">Anterior</button>
-          <button onclick="nextDetailImage()">Siguiente</button>
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <span class="btn-close float-end" onclick="closeProductImagesModal()"></span>
+        <img id="productModalImage" src="" alt="Imagen del Producto">
+        <div class="text-center mt-3">
+          <button class="btn btn-secondary me-2" onclick="prevProductImage()">Anterior</button>
+          <button class="btn btn-secondary" onclick="nextProductImage()">Siguiente</button>
         </div>
       </div>
-      <p id="detailProductDescription"></p>
-      <p class="price" id="detailProductPrice"></p>
-      <p>Calificación Promedio: <span id="averageRating">Sin calificar</span></p>
-      <div class="reviews" id="reviewsContainer"></div>
-      <form id="reviewForm">
-        <h3>Agrega tu reseña</h3>
-        <select id="reviewRating" required>
-          <option value="">Calificación</option>
-          <option value="1">1 estrella</option>
-          <option value="2">2 estrellas</option>
-          <option value="3">3 estrellas</option>
-          <option value="4">4 estrellas</option>
-          <option value="5">5 estrellas</option>
-        </select>
-        <textarea id="reviewComment" placeholder="Tu comentario" required></textarea>
-        <button type="submit">Enviar Reseña</button>
-      </form>
     </div>
   </div>
   
-  <footer>
+  <div id="productDetailModal" class="modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content p-3">
+        <span class="btn-close float-end" onclick="closeProductDetailModal()"></span>
+        <h2 id="detailProductTitle" class="mb-3"></h2>
+        <div class="row">
+          <div class="col-md-6">
+            <img id="detailModalImage" src="" alt="Imagen del Producto" class="img-fluid">
+            <div class="text-center mt-2">
+              <button class="btn btn-outline-secondary me-2" onclick="prevDetailImage()">Anterior</button>
+              <button class="btn btn-outline-secondary" onclick="nextDetailImage()">Siguiente</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <p id="detailProductDescription"></p>
+            <p class="h4 text-danger" id="detailProductPrice"></p>
+            <p>Calificación Promedio: <span id="averageRating">Sin calificar</span></p>
+            <div id="reviewsContainer" class="border p-2 mb-3" style="max-height:150px; overflow-y:auto;"></div>
+            <form id="reviewForm">
+              <div class="mb-2">
+                <select id="reviewRating" class="form-select" required>
+                  <option value="">Calificación</option>
+                  <option value="1">1 estrella</option>
+                  <option value="2">2 estrellas</option>
+                  <option value="3">3 estrellas</option>
+                  <option value="4">4 estrellas</option>
+                  <option value="5">5 estrellas</option>
+                </select>
+              </div>
+              <div class="mb-2">
+                <textarea id="reviewComment" class="form-control" placeholder="Tu comentario" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Enviar Reseña</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="text-center py-3 bg-light">
     <p>&copy; 2025 LA W. Todos los derechos reservados.</p>
   </footer>
   
   <button class="dark-toggle" onclick="toggleTheme()">Modo Oscuro</button>
   
+  <!-- JavaScript: Bootstrap Bundle y lógica personalizada -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Función para actualizar el menú según estado de autenticación
+    function updateNav() {
+      if(currentUser) {
+        document.getElementById('navBuyerPanelItem').style.display = 'block';
+        document.getElementById('navSellerPanelItem').style.display = 'block';
+        document.getElementById('navLoginItem').style.display = 'none';
+        document.getElementById('navRegisterItem').style.display = 'none';
+      } else {
+        document.getElementById('navBuyerPanelItem').style.display = 'none';
+        document.getElementById('navSellerPanelItem').style.display = 'none';
+        document.getElementById('navLoginItem').style.display = 'block';
+        document.getElementById('navRegisterItem').style.display = 'none'; // Registro oculto en este ejemplo
+      }
+    }
+    
     // Variables globales
     let users = JSON.parse(localStorage.getItem('users')) || [];
     let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
@@ -497,13 +377,13 @@ HTML_TEMPLATE = '''
     
     // Productos iniciales
     let products = [
-      { id: 1, name: 'Producto 1', description: 'Descripción breve del producto 1', price: 10.00, images: ['https://via.placeholder.com/300x200', 'https://via.placeholder.com/300x200/AAAAAA'], seller: "default@seller.com", reviews: [] },
+      { id: 1, name: 'Producto 1', description: 'Descripción breve del producto 1', price: 10.00, images: ['https://via.placeholder.com/300x200','https://via.placeholder.com/300x200/AAAAAA'], seller: "default@seller.com", reviews: [] },
       { id: 2, name: 'Producto 2', description: 'Descripción breve del producto 2', price: 20.00, images: ['https://via.placeholder.com/300x200'], seller: "default@seller.com", reviews: [] },
-      { id: 3, name: 'Producto 3', description: 'Descripción breve del producto 3', price: 15.00, images: ['https://via.placeholder.com/300x200', 'https://via.placeholder.com/300x200/CCCCCC', 'https://via.placeholder.com/300x200/EEEEEE'], seller: "default@seller.com", reviews: [] },
+      { id: 3, name: 'Producto 3', description: 'Descripción breve del producto 3', price: 15.00, images: ['https://via.placeholder.com/300x200','https://via.placeholder.com/300x200/CCCCCC','https://via.placeholder.com/300x200/EEEEEE'], seller: "default@seller.com", reviews: [] },
       { id: 4, name: 'Producto 4', description: 'Descripción breve del producto 4', price: 8.00, images: ['https://via.placeholder.com/300x200'], seller: "default@seller.com", reviews: [] }
     ];
     
-    // Variables para modales y detalle
+    // Variables para imágenes y detalle
     let currentProductImages = [];
     let currentImageIndex = 0;
     let currentDetailProduct = null;
@@ -526,17 +406,19 @@ HTML_TEMPLATE = '''
       grid.innerHTML = '';
       products.forEach(product => {
         let div = document.createElement('div');
-        div.className = 'product animate-fadeIn';
+        div.className = 'col';
         div.innerHTML = `
-          <img src="${product.images[0]}" alt="${product.name}">
-          <div class="product-content">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <p class="price">$${product.price.toFixed(2)}</p>
-            <button onclick="simulatePayment(${product.id})">Comprar</button>
-            <button onclick="addToCart(${product.id}, this)">Agregar al carrito</button>
-            ${ product.images.length > 1 ? `<button onclick="openProductImages(${product.id})">Ver imágenes</button>` : '' }
-            <button onclick="openProductDetail(${product.id})">Ver detalles</button>
+          <div class="card h-100 animate__animated animate__fadeIn">
+            <img src="${product.images[0]}" class="card-img-top" alt="${product.name}">
+            <div class="card-body">
+              <h5 class="card-title">${product.name}</h5>
+              <p class="card-text">${product.description}</p>
+              <p class="text-danger fw-bold">$${product.price.toFixed(2)}</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-primary" onclick="simulatePayment(${product.id})">Comprar</button>
+              <button class="btn btn-sm btn-warning" onclick="addToCart(${product.id}, this)">Agregar al carrito</button>
+            </div>
           </div>
         `;
         grid.appendChild(div);
@@ -581,12 +463,13 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       const cartList = document.getElementById('cartItems');
       cartList.innerHTML = '';
       if(cart.length === 0) {
-        cartList.innerHTML = "<li>El carrito está vacío.</li>";
+        cartList.innerHTML = "<li class='list-group-item'>El carrito está vacío.</li>";
       } else {
         let total = 0;
         cart.forEach((item, index) => {
           let li = document.createElement('li');
-          li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button onclick="removeFromCart(${index})">Quitar</button>`;
+          li.className = 'list-group-item d-flex justify-content-between align-items-center';
+          li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">Quitar</button>`;
           cartList.appendChild(li);
           total += item.price;
         });
@@ -628,17 +511,19 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       products.filter(p => p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query))
               .forEach(product => {
         let div = document.createElement('div');
-        div.className = 'product';
+        div.className = 'col';
         div.innerHTML = `
-          <img src="${product.images[0]}" alt="${product.name}">
-          <div class="product-content">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <p class="price">$${product.price.toFixed(2)}</p>
-            <button onclick="simulatePayment(${product.id})">Comprar</button>
-            <button onclick="addToCart(${product.id}, this)">Agregar al carrito</button>
-            ${ product.images.length > 1 ? `<button onclick="openProductImages(${product.id})">Ver imágenes</button>` : '' }
-            <button onclick="openProductDetail(${product.id})">Ver detalles</button>
+          <div class="card h-100 animate__animated animate__fadeIn">
+            <img src="${product.images[0]}" class="card-img-top" alt="${product.name}">
+            <div class="card-body">
+              <h5 class="card-title">${product.name}</h5>
+              <p class="card-text">${product.description}</p>
+              <p class="text-danger fw-bold">$${product.price.toFixed(2)}</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-primary" onclick="simulatePayment(${product.id})">Comprar</button>
+              <button class="btn btn-sm btn-warning" onclick="addToCart(${product.id}, this)">Agregar al carrito</button>
+            </div>
           </div>
         `;
         grid.appendChild(div);
@@ -651,14 +536,10 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       orders.filter(o => o.buyer === (currentUser ? currentUser.email : ""))
             .forEach(order => {
               let div = document.createElement('div');
-              div.className = 'order';
+              div.className = 'mb-2 p-2 border rounded animate__animated animate__fadeIn';
               div.innerHTML = `<strong>Orden ${order.orderId}</strong> - ${order.product.name} - Estado: ${order.status}`;
               if(order.status === "En proceso") { 
-                div.innerHTML += `<br><button onclick="openChatModal(${order.orderId})">Chat</button>`; 
-              } else if(order.status === "Confirmada" && !order.buyerNotified) {
-                div.innerHTML += `<div class="info">¡Felicitaciones! Has hecho tu primera compra, gracias por confiar en nosotros.</div>`;
-                order.buyerNotified = true;
-                localStorage.setItem('orders', JSON.stringify(orders));
+                div.innerHTML += `<br><button class="btn btn-sm btn-secondary mt-1" onclick="openChatModal(${order.orderId})">Chat</button>`; 
               }
               container.appendChild(div);
             });
@@ -671,11 +552,11 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       orders.filter(o => o.seller === (currentUser ? currentUser.email : ""))
             .forEach(order => {
               let div = document.createElement('div');
-              div.className = 'order';
+              div.className = 'mb-2 p-2 border rounded animate__animated animate__fadeIn';
               div.innerHTML = `<strong>Orden ${order.orderId}</strong> - ${order.product.name} - Estado: ${order.status}`;
               if(order.status === "En proceso") {
-                div.innerHTML += `<br><button onclick="confirmOrder(${order.orderId})">Confirmar Pago</button>`;
-                div.innerHTML += `<button onclick="openChatModal(${order.orderId})">Chat</button>`;
+                div.innerHTML += `<br><button class="btn btn-sm btn-success me-2" onclick="confirmOrder(${order.orderId})">Confirmar Pago</button>`;
+                div.innerHTML += `<button class="btn btn-sm btn-secondary" onclick="openChatModal(${order.orderId})">Chat</button>`;
               }
               container.appendChild(div);
             });
@@ -776,13 +657,15 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       grid.innerHTML = "";
       sellerProducts.forEach(product => {
         let div = document.createElement('div');
-        div.className = 'product';
+        div.className = 'col';
         div.innerHTML = `
-          <img src="${product.images[0]}" alt="${product.name}">
-          <div class="product-content">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <p class="price">$${product.price.toFixed(2)}</p>
+          <div class="card h-100">
+            <img src="${product.images[0]}" class="card-img-top" alt="${product.name}">
+            <div class="card-body">
+              <h5 class="card-title">${product.name}</h5>
+              <p class="card-text">${product.description}</p>
+              <p class="text-danger fw-bold">$${product.price.toFixed(2)}</p>
+            </div>
           </div>
         `;
         grid.appendChild(div);
@@ -812,12 +695,17 @@ Una vez confirmada la compra se desbloqueará el chat.`);
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
         alert("Bienvenido, " + user.name);
         closeLoginModal();
+        updateNav();
         if(user.type === 'seller') showSection('sellerPanel');
         else showSection('buyerPanel');
       } else { alert("Credenciales incorrectas."); }
     });
     
     function openChatModal(orderId) {
+      if(!currentUser) {
+        alert("Debes iniciar sesión para acceder al chat.");
+        return;
+      }
       currentChatOrderId = orderId;
       document.getElementById('chatModal').style.display = 'block';
       let order = orders.find(o => o.orderId == orderId);
@@ -926,7 +814,7 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       }
       currentDetailProduct.reviews.forEach(rev => {
         let div = document.createElement('div');
-        div.className = "review";
+        div.className = "mb-2 p-2 border rounded";
         div.innerHTML = `<strong>${rev.user}</strong> - ${rev.rating} estrellas<br>${rev.comment}`;
         container.appendChild(div);
       });
@@ -957,7 +845,10 @@ Una vez confirmada la compra se desbloqueará el chat.`);
       console.log("Ejecutando efecto de animación extra: " + effectName);
     }
     
+    // Al cargar la página se actualiza el menú y se renderizan los productos
     window.onload = function() {
+      currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+      updateNav();
       renderProducts();
       sellerProducts = JSON.parse(localStorage.getItem('sellerProducts')) || [];
       sellerEarnings = parseFloat(localStorage.getItem('sellerEarnings')) || 0;
