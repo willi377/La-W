@@ -451,7 +451,7 @@ HTML_TEMPLATE = '''
         }
       }
       
-      // Funciones para verificación
+      // Funciones para verificación de teléfono y correo en dos pasos
       function openPhoneVerificationModal() {
         var modal = new bootstrap.Modal(document.getElementById('phoneVerificationModal'));
         modal.show();
@@ -500,7 +500,7 @@ HTML_TEMPLATE = '''
         }
       }
       
-      // Registro y login
+      // Eventos para registro y login
       document.getElementById('registerForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const name = document.getElementById('registerName').value;
@@ -539,12 +539,12 @@ HTML_TEMPLATE = '''
           updateNav();
           if(user.type === 'seller') showSection('sellerPanel');
           else showSection('buyerPanel');
-        } else { 
-          alert("Credenciales incorrectas."); 
+        } else {
+          alert("Credenciales incorrectas.");
         }
       });
       
-      // Resto de funciones (productos, carrito, chat, ver producto, etc.)
+      // Funciones para el resto de la lógica (productos, carrito, chat, etc.)
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
       let orders = JSON.parse(localStorage.getItem('orders')) || [];
       let sellerProducts = JSON.parse(localStorage.getItem('sellerProducts')) || [];
@@ -817,7 +817,7 @@ Una vez confirmada la compra se desbloqueará el chat.`);
         document.getElementById('vendorInviteMessage').style.display = (value === "seller") ? "block" : "none";
       }
       
-      // Eventos para imágenes y producto
+      // Eventos para imágenes y productos
       document.getElementById('productImages').addEventListener('change', function(e) {
         const previewContainer = document.getElementById('imagePreview');
         previewContainer.innerHTML = "";
@@ -927,13 +927,12 @@ Una vez confirmada la compra se desbloqueará el chat.`);
           updateNav();
           if(user.type === 'seller') showSection('sellerPanel');
           else showSection('buyerPanel');
-        } else { 
-          alert("Credenciales incorrectas."); 
+        } else {
+          alert("Credenciales incorrectas.");
         }
       });
       
-      // Funciones para chat, ver imágenes y detalles de producto
-      let chatSessions = JSON.parse(localStorage.getItem('chatSessions')) || {};
+      // Funciones para chat y detalle de producto
       let currentChatOrderId = null;
       
       function openChatModal(orderId) {
@@ -971,9 +970,6 @@ Una vez confirmada la compra se desbloqueará el chat.`);
         renderChatMessages();
       }
       
-      let orders = JSON.parse(localStorage.getItem('orders')) || [];
-      let sellerProducts = JSON.parse(localStorage.getItem('sellerProducts')) || [];
-      
       function openProductImages(productId) {
         const product = products.find(p => p.id === productId);
         if(!product || product.images.length === 0) return;
@@ -982,7 +978,9 @@ Una vez confirmada la compra se desbloqueará el chat.`);
         document.getElementById('productModalImage').src = currentProductImages[currentImageIndex];
         document.getElementById('productImagesModal').style.display = 'block';
       }
-      function closeProductImagesModal() { document.getElementById('productImagesModal').style.display = 'none'; }
+      function closeProductImagesModal() {
+        document.getElementById('productImagesModal').style.display = 'none';
+      }
       function prevProductImage() {
         currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : currentProductImages.length - 1;
         document.getElementById('productModalImage').src = currentProductImages[currentImageIndex];
@@ -992,12 +990,9 @@ Una vez confirmada la compra se desbloqueará el chat.`);
         document.getElementById('productModalImage').src = currentProductImages[currentImageIndex];
       }
       
-      let currentProductImages = [];
-      let currentImageIndex = 0;
       let currentDetailProduct = null;
       let currentDetailImages = [];
       let currentDetailIndex = 0;
-      
       function openProductDetail(productId) {
         const product = products.find(p => p.id === productId);
         if(!product) return;
@@ -1039,6 +1034,7 @@ Una vez confirmada la compra se desbloqueará el chat.`);
           container.appendChild(div);
         });
       }
+      
       for(let i = 1; i <= 50; i++){
         window['extraLogic' + i] = function(){ console.log("Ejecutando lógica extra " + i); }
       }
