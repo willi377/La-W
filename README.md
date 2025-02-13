@@ -2,261 +2,68 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <title>Style The W - Demo en CodePen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Style The W</title>
   <!-- Fuente moderna -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset y estilos base */
+    /* Estilos generales */
     * { box-sizing: border-box; }
-    body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Montserrat', sans-serif;
-      scroll-behavior: smooth;
-      background: #fff;
-      color: #333;
-    }
-    a { color: #333; }
-    
-    /* Header y navegación flotante */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      z-index: 1000;
-      transition: background 0.3s;
-    }
-    header nav {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 15px 0;
-    }
-    header nav a {
-      margin: 0 20px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: color 0.3s;
-    }
+    body, html { margin:0; padding:0; font-family:'Montserrat', sans-serif; background:#fff; color:#333; }
+    a { color: #333; text-decoration: none; }
+    header { background: #f9f9f9; padding: 15px; text-align: center; }
+    header nav a { margin: 0 10px; font-weight: 700; }
     header nav a:hover { color: #e63946; }
-    
-    /* Botón de modo oscuro/claro */
-    #modeToggle {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      background: #333;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 1001;
-      transition: background 0.3s;
-    }
-    #modeToggle:hover { background: #555; }
-    
-    /* Banner con efecto parallax y overlay */
-    .banner {
-      height: 70vh;
-      background: url('https://via.placeholder.com/1600x900') center/cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      margin-top: 70px;
-    }
-    .banner::after {
-      content: '';
-      position: absolute;
-      top:0; left:0; right:0; bottom:0;
-      background: rgba(0,0,0,0.4);
-    }
-    .banner-content {
-      position: relative;
-      text-align: center;
-      z-index: 1;
-    }
-    .banner-content h1 { 
-      font-size: 3em; 
-      margin: 0;
-      text-shadow: 2px 2px 10px #FF4500;
-    }
-    .banner-content p { font-size: 1.5em; margin: 10px 0 0; }
-    
-    /* Secciones */
-    section {
-      padding: 60px 20px;
-    }
-    .section-title {
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 2em;
-    }
-    
+    .banner { height: 70vh; background: url('https://via.placeholder.com/1600x900') center/cover no-repeat; display: flex; align-items: center; justify-content: center; color: #fff; position: relative; }
+    .banner::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); }
+    .banner-content { position: relative; text-align: center; z-index: 1; }
+    .banner-content h1 { font-size: 3em; margin: 0; text-shadow: 2px 2px 10px #FF4500; }
+    .banner-content p { font-size: 1.5em; margin-top: 10px; }
+    section { padding: 40px 20px; }
+    .section-title { text-align: center; font-size: 2em; margin-bottom: 20px; }
     /* Catálogo de Productos */
-    .catalogo {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 0 20px;
-    }
-    
-    /* Tarjeta de producto con slider */
-    .producto {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
-    }
-    .producto:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-    
-    /* Etiqueta de estado (venta/sold) */
-    .status-label {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: rgba(255, 69, 0, 0.9); /* Naranja neón */
-      color: #fff;
-      padding: 5px 10px;
-      font-size: 0.9em;
-      border-radius: 3px;
-      z-index: 2;
-    }
-    .status-label.sold {
-      background: rgba(128, 128, 128, 0.9);
-    }
-    
+    .catalogo { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 0 20px; }
+    .producto { border: 1px solid #ddd; padding: 15px; position: relative; }
+    .status-label { position: absolute; top: 10px; left: 10px; background: rgba(255,69,0,0.9); color: #fff; padding: 5px 10px; border-radius: 3px; font-size: 0.9em; }
+    .status-label.sold { background: rgba(128,128,128,0.9); }
+    .producto h3 { margin: 10px 0; font-size: 1.2em; }
+    .producto p { margin: 5px 0; font-weight: bold; }
     /* Slider de imágenes */
-    .slider {
-      position: relative;
-      overflow: hidden;
-      height: 500px;
-    }
-    .slides {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-    .slider img {
-      width: 100%;
-      flex-shrink: 0;
-      object-fit: cover;
-      loading: lazy;
-    }
-    .prev, .next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      color: #fff;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 50%;
-    }
+    .slider { position: relative; overflow: hidden; height: 300px; margin-bottom: 10px; }
+    .slides { display: flex; transition: transform 0.5s ease-in-out; }
+    .slider img { width: 100%; flex-shrink: 0; object-fit: cover; }
+    .prev, .next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: none; padding: 10px; cursor: pointer; border-radius: 50%; }
     .prev { left: 10px; }
     .next { right: 10px; }
-    
-    /* Información del producto */
-    .producto .info {
-      padding: 15px;
-      text-align: center;
-    }
-    .producto .info h3 {
-      margin: 10px 0;
-      font-size: 1.2em;
-    }
-    .producto .info p {
-      margin: 5px 0;
-      font-size: 1em;
-      font-weight: bold;
-    }
-    .whatsapp-btn {
-      display: inline-block;
-      background: #25d366;
-      color: #fff;
-      padding: 10px 20px;
-      margin: 10px 0;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .whatsapp-btn:hover { background: #1da851; }
-    
-    /* Botón Volver Arriba */
-    #backToTop {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: #333;
-      color: #fff;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      display: none;
-      z-index: 1000;
-    }
-    
-    /* Texto informativo largo con diseño estético */
-    .info-text {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 30px;
-      line-height: 1.8;
-      text-align: justify;
-      font-size: 1.2em;
-      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-      border-left: 5px solid #FF4500;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      font-style: italic;
-    }
-    .info-text p {
-      margin-bottom: 20px;
-    }
-    
-    /* Sección de Contacto con dos números */
-    .contact-info {
-      text-align: center;
-      font-size: 1.1em;
-      margin-bottom: 20px;
-    }
-    
-    /* Modo Oscuro */
-    .dark-mode {
-      background: #121212;
-      color: #eee;
-    }
-    .dark-mode header { background: rgba(18, 18, 18, 0.95); }
-    .dark-mode header nav a { color: #eee; }
-    .dark-mode .producto { background: #1e1e1e; border-color: #333; }
+    /* Sección de Contacto e Información */
+    .contact-info { text-align: center; font-size: 1.1em; margin-bottom: 20px; }
+    .info-text { max-width: 800px; margin: 40px auto; padding: 30px; background: linear-gradient(135deg, #f5f7fa, #c3cfe2); border-left: 5px solid #FF4500; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); font-style: italic; }
+    .info-text p { margin-bottom: 20px; }
+    /* Modal de Admin Login */
+    .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 2000; }
+    .modal-content { background: #fff; padding: 20px; border-radius: 5px; max-width: 400px; width: 90%; }
+    /* Panel de Administración */
+    #admin-panel { max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: none; }
+    #admin-panel form { display: block; }
+    #admin-panel label { display: block; margin-bottom: 10px; }
+    #admin-panel input, #admin-panel select { width: 100%; padding: 8px; margin-bottom: 20px; }
+    #admin-panel button { padding: 10px 20px; }
   </style>
 </head>
 <body>
-  <!-- Botón de modo oscuro/claro -->
-  <button id="modeToggle">Modo Oscuro</button>
-  
-  <!-- Header con navegación -->
-  <header id="header">
+  <!-- Header -->
+  <header>
     <nav>
-      <a href="#home">Inicio</a>
+      <a href="#">Inicio</a>
       <a href="#catalogo">Catálogo</a>
       <a href="#contacto">Contacto</a>
+      <a href="#" class="admin-link" onclick="showAdminLogin()">Admin</a>
     </nav>
   </header>
   
-  <!-- Banner principal -->
-  <div class="banner" id="home">
+  <!-- Banner -->
+  <div class="banner">
     <div class="banner-content">
       <h1>Style The W</h1>
       <p>Viste con estilo, vive con pasión</p>
@@ -266,51 +73,8 @@
   <!-- Catálogo de Productos -->
   <section id="catalogo">
     <h2 class="section-title">Catálogo de Productos</h2>
-    <div class="catalogo">
-      <!-- Producto 1 -->
-      <div class="producto">
-        <span class="status-label">EN VENTA</span>
-        <div class="slider">
-          <div class="slides">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+1" alt="Imagen 1">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+2" alt="Imagen 2">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+3" alt="Imagen 3">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+4" alt="Imagen 4">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+5" alt="Imagen 5">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+6" alt="Imagen 6">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+7" alt="Imagen 7">
-          </div>
-          <button class="prev">&#10094;</button>
-          <button class="next">&#10095;</button>
-        </div>
-        <div class="info">
-          <h3>Camiseta Blanca</h3>
-          <p>$20.00</p>
-          <a href="https://wa.me/1234567890?text=Interesado%20en%20la%20Camiseta%20Blanca" class="whatsapp-btn" target="_blank">WhatsApp</a>
-        </div>
-      </div>
-      
-      <!-- Producto 2 -->
-      <div class="producto">
-        <span class="status-label sold">VENDIDO</span>
-        <div class="slider">
-          <div class="slides">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+1" alt="Imagen 1">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+2" alt="Imagen 2">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+3" alt="Imagen 3">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+4" alt="Imagen 4">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+5" alt="Imagen 5">
-            <img src="https://via.placeholder.com/400x500?text=Imagen+6" alt="Imagen 6">
-          </div>
-          <button class="prev">&#10094;</button>
-          <button class="next">&#10095;</button>
-        </div>
-        <div class="info">
-          <h3>Jeans Clásicos</h3>
-          <p>$35.00</p>
-          <a href="https://wa.me/1234567890?text=Interesado%20en%20los%20Jeans%20Cl%C3%A1sicos" class="whatsapp-btn" target="_blank">WhatsApp</a>
-        </div>
-      </div>
+    <div class="catalogo" id="catalogo-container">
+      <!-- Se cargan los productos desde localStorage -->
     </div>
   </section>
   
@@ -320,13 +84,10 @@
     <div class="contact-info">
       <p>Para más información, contáctanos vía WhatsApp o llámanos: <strong>32251373388</strong> y <strong>321243232</strong>.</p>
     </div>
-    <div style="text-align: center; margin-top: 20px;">
-      <a href="https://wa.me/1234567890?text=Quiero%20más%20informaci%C3%B3n" class="whatsapp-btn" target="_blank">Enviar WhatsApp</a>
-    </div>
   </section>
   
-  <!-- Texto informativo largo con diseño estético -->
-  <section id="info" class="info-text">
+  <!-- Sección de Información -->
+  <section class="info-text">
     <p>
       En 🔥Style the W🔥 encontrarás ropa👗🩳 para todos los estilos a precios💸 increíbles. Visítanos en Tadó, Chocó, y disfruta de 📦 contra entrega🚚 para mayor seguridad. ¡Vive la moda con nosotros!✨
     </p>
@@ -338,44 +99,202 @@
     </p>
   </section>
   
-  <!-- Botón Volver Arriba -->
-  <button id="backToTop">Arriba</button>
+  <!-- Modal de Admin Login -->
+  <div id="adminLoginModal" class="modal">
+    <div class="modal-content">
+      <h2>Admin Login</h2>
+      <form id="adminLoginForm">
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" required>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" required>
+        <button type="submit">Ingresar</button>
+        <button type="button" onclick="hideAdminLogin()">Cancelar</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Panel de Administración -->
+  <section id="admin-panel">
+    <h2>Panel de Administración</h2>
+    <form id="adminProductForm">
+      <label>Nombre del Producto:
+        <input type="text" id="admin-product-name" required>
+      </label>
+      <label>Precio:
+        <input type="number" id="admin-product-price" step="0.01" required>
+      </label>
+      <label>Status:
+        <select id="admin-product-status">
+          <option value="EN VENTA">EN VENTA</option>
+          <option value="VENDIDO">VENDIDO</option>
+        </select>
+      </label>
+      <label>Subir nuevas imágenes:
+        <input type="file" id="admin-product-images" multiple>
+      </label>
+      <button type="button" onclick="updateProduct()">Actualizar Producto</button>
+    </form>
+    <br>
+    <button onclick="logoutAdmin()">Cerrar Sesión</button>
+  </section>
   
   <script>
-    // Alternar modo oscuro/claro
-    const modeToggle = document.getElementById('modeToggle');
-    modeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      modeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Modo Claro' : 'Modo Oscuro';
-    });
+    // Inicializar el producto en localStorage si no existe
+    const defaultProduct = {
+      name: "Camiseta Blanca",
+      price: 20.00,
+      status: "EN VENTA",
+      images: [] // Array para almacenar data URLs
+    };
+    if (!localStorage.getItem("product")) {
+      localStorage.setItem("product", JSON.stringify(defaultProduct));
+    }
     
-    // Mostrar botón "Volver Arriba"
-    const backToTop = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      backToTop.style.display = window.pageYOffset > 300 ? 'block' : 'none';
-    });
-    
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    
-    // Funcionalidad del slider para cada producto
-    document.querySelectorAll('.slider').forEach(slider => {
-      const slides = slider.querySelector('.slides');
-      const images = slides.querySelectorAll('img');
-      let currentIndex = 0;
-      const total = images.length;
+    // Función para renderizar el catálogo
+    function renderCatalog() {
+      const product = JSON.parse(localStorage.getItem("product"));
+      const container = document.getElementById("catalogo-container");
+      container.innerHTML = "";
+      const prodDiv = document.createElement("div");
+      prodDiv.className = "producto";
       
-      slider.querySelector('.prev').addEventListener('click', () => {
-        currentIndex = (currentIndex === 0) ? total - 1 : currentIndex - 1;
-        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-      });
+      const statusSpan = document.createElement("span");
+      statusSpan.className = "status-label";
+      if (product.status === "VENDIDO") {
+        statusSpan.classList.add("sold");
+      }
+      statusSpan.textContent = product.status;
+      prodDiv.appendChild(statusSpan);
       
-      slider.querySelector('.next').addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % total;
-        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-      });
+      // Slider de imágenes (si existen)
+      if (product.images.length > 0) {
+        const sliderDiv = document.createElement("div");
+        sliderDiv.className = "slider";
+        const slidesDiv = document.createElement("div");
+        slidesDiv.className = "slides";
+        product.images.forEach(imgData => {
+          const img = document.createElement("img");
+          img.src = imgData;
+          img.alt = "Imagen del producto";
+          slidesDiv.appendChild(img);
+        });
+        sliderDiv.appendChild(slidesDiv);
+        
+        // Botones de slider
+        const prevBtn = document.createElement("button");
+        prevBtn.className = "prev";
+        prevBtn.innerHTML = "&#10094;";
+        sliderDiv.appendChild(prevBtn);
+        const nextBtn = document.createElement("button");
+        nextBtn.className = "next";
+        nextBtn.innerHTML = "&#10095;";
+        sliderDiv.appendChild(nextBtn);
+        
+        prodDiv.appendChild(sliderDiv);
+        
+        let currentIndex = 0;
+        const total = product.images.length;
+        prevBtn.addEventListener("click", () => {
+          currentIndex = (currentIndex === 0) ? total - 1 : currentIndex - 1;
+          slidesDiv.style.transform = `translateX(-${currentIndex * 100}%)`;
+        });
+        nextBtn.addEventListener("click", () => {
+          currentIndex = (currentIndex + 1) % total;
+          slidesDiv.style.transform = `translateX(-${currentIndex * 100}%)`;
+        });
+      }
+      
+      const h3 = document.createElement("h3");
+      h3.textContent = product.name;
+      prodDiv.appendChild(h3);
+      
+      const pPrice = document.createElement("p");
+      pPrice.textContent = "$ " + product.price;
+      prodDiv.appendChild(pPrice);
+      
+      container.appendChild(prodDiv);
+    }
+    
+    renderCatalog();
+    
+    // Funciones para el Admin Login Modal
+    function showAdminLogin() {
+      document.getElementById("adminLoginModal").style.display = "flex";
+    }
+    function hideAdminLogin() {
+      document.getElementById("adminLoginModal").style.display = "none";
+    }
+    
+    document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      if (username === "admin" && password === "admin123") {
+        localStorage.setItem("isAdmin", "true");
+        hideAdminLogin();
+        showAdminPanel();
+      } else {
+        alert("Credenciales incorrectas");
+      }
     });
+    
+    function showAdminPanel() {
+      document.getElementById("admin-panel").style.display = "block";
+      const product = JSON.parse(localStorage.getItem("product"));
+      document.getElementById("admin-product-name").value = product.name;
+      document.getElementById("admin-product-price").value = product.price;
+      document.getElementById("admin-product-status").value = product.status;
+    }
+    
+    function logoutAdmin() {
+      localStorage.removeItem("isAdmin");
+      document.getElementById("admin-panel").style.display = "none";
+    }
+    
+    // Actualizar el producto desde el panel de admin
+    function updateProduct() {
+      const newName = document.getElementById("admin-product-name").value;
+      const newPrice = parseFloat(document.getElementById("admin-product-price").value);
+      const newStatus = document.getElementById("admin-product-status").value;
+      const files = document.getElementById("admin-product-images").files;
+      
+      let product = JSON.parse(localStorage.getItem("product"));
+      product.name = newName;
+      product.price = newPrice;
+      product.status = newStatus;
+      
+      if (files.length > 0) {
+        const promises = [];
+        for (let i = 0; i < files.length; i++) {
+          promises.push(new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              resolve(e.target.result);
+            };
+            reader.onerror = function() {
+              reject("Error leyendo archivo");
+            };
+            reader.readAsDataURL(files[i]);
+          }));
+        }
+        Promise.all(promises).then(results => {
+          product.images = product.images.concat(results);
+          localStorage.setItem("product", JSON.stringify(product));
+          renderCatalog();
+          alert("Producto actualizado");
+        }).catch(err => alert(err));
+      } else {
+        localStorage.setItem("product", JSON.stringify(product));
+        renderCatalog();
+        alert("Producto actualizado");
+      }
+    }
+    
+    // Mostrar el panel de admin si ya está logueado
+    if (localStorage.getItem("isAdmin") === "true") {
+      showAdminPanel();
+    }
   </script>
 </body>
 </html>
